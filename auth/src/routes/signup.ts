@@ -4,6 +4,10 @@ import { RequestValidationError } from '../errors/request-validation-error';
 
 const router = express.Router()
 
+router.get('/api/users/signup', (req:any, res:any) => {
+res.send('Hello world')
+})
+
 router.post(
   "/api/users/signup",
   [
