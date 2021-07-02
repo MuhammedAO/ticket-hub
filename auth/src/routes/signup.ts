@@ -46,7 +46,7 @@ router.post(
         id: user.id,
         email: user.email,
       },
-      "mkl"
+      process.env.JWT_KEY!
     )
 
     //store it on the session{}
