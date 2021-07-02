@@ -14,4 +14,12 @@ export class Password {
     return `${buffr.toString('hex')}.${salt}`
   }
 
+  static async compare(storedPassword: string, supppliedPassword: string) {
+    const [hashedPassword, salt] = storedPassword.split('.')
+
+    const buffr = (await scrytpAsnyc(supppliedPassword, salt, 64)) as Buffer
+
+    return buffr.toString('hex') === hashedPassword
+   
+  }
 }
