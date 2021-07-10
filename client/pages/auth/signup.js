@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 import FormContainer from "../../components/FormContainer"
-import Link from "next/link"
-import { Form, Button, Row, Col } from "react-bootstrap"
-import axios from "axios"
 import Message from "../../components/Message"
 import Loader from "../../components/Loader"
+import { Form, Button, Row, Col } from "react-bootstrap"
+import axios from "axios"
+import Link from "next/link"
+import Router from 'next/router'
 
 function SignUp() {
   const [email, setEmail] = useState("")
@@ -24,7 +25,8 @@ function SignUp() {
       setLoading(true)
       setEmail('')
       setPassword('')
-    
+
+      Router.push('/')
       console.log(response.data)
     } catch (err) {
       setErrors(err.response.data.errors)
