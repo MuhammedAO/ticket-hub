@@ -72,7 +72,7 @@ function SignUp() {
       <Row className="py-3">
         <Col>
           Have an account?
-          <Link href="/">
+          <Link href="/auth/signin">
             <a> Login</a>
           </Link>
         </Col>
