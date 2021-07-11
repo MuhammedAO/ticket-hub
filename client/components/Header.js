@@ -1,7 +1,20 @@
 import React from "react"
 import { Navbar, Nav, Container } from "react-bootstrap"
 
-function Header() {
+function Header({ currentUser }) {
+  const links = [
+    !currentUser && { label: "Sign Up", href: "/auth/signup" },
+    !currentUser && { label: "Sign In", href: "/auth/signin" },
+    currentUser && { label: "Sign Out", href: "/auth/signout" },
+  ]
+    .filter((linkConfig) => linkConfig)
+    .map(({ label, href }) => {
+      return (
+        <Nav.Link key={href} href={href}>
+          {label}
+        </Nav.Link>
+      )
+    })
   return (
     <React.Fragment>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -9,10 +22,7 @@ function Header() {
           <Navbar.Brand href="/">ticket-X</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
-              <Nav.Link href="/auth/signup">sign up</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
-            </Nav>
+            <Nav className="ml-auto">{links}</Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
