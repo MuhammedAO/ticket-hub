@@ -1,7 +1,8 @@
 import express from "express"
 import "express-async-errors"
 import cookieSession from "cookie-session"
-import { errorHandler, NotFoundError } from "@mhd-ticketx/ticket-x"
+import { errorHandler, NotFoundError, currentUser } from "@mhd-ticketx/ticket-x"
+import {createTicketRouter} from './routes/new'
 
 
 export const app = express()
@@ -16,6 +17,8 @@ app.use(
   })
 )
 
+app.use(currentUser)
+app.use(createTicketRouter)
 
 app.all("*", async (req: any, res: any) => {
   throw new NotFoundError()
