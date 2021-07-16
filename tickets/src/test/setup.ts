@@ -1,8 +1,7 @@
 import { MongoMemoryServer } from "mongodb-memory-server"
 import mongoose from "mongoose"
 import jwt from "jsonwebtoken"
-import request from "supertest"
-import { app } from "../app"
+
 
 declare global {
   namespace NodeJS {
@@ -42,7 +41,7 @@ global.signin = () => {
   //fake authentication
   //build jwt payload
   const payload = {
-    id: "kmlfd",
+    id: new mongoose.Types.ObjectId().toHexString(),
     email: "llkmfk@kmdkl.com",
   }
 

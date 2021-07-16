@@ -5,6 +5,7 @@ import { errorHandler, NotFoundError, currentUser } from "@mhd-ticketx/ticket-x"
 import {createTicketRouter} from './routes/new'
 import { showTicketRouter } from "./routes/show"
 import { indexTicketRouter } from "./routes"
+import { updateTicketRouter } from "./routes/update"
 
 
 export const app = express()
@@ -23,6 +24,7 @@ app.use(currentUser)
 app.use(createTicketRouter)
 app.use(showTicketRouter)
 app.use(indexTicketRouter)
+app.use(updateTicketRouter)
 
 app.all("*", async (req: any, res: any) => {
   throw new NotFoundError()
