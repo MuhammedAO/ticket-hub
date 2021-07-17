@@ -1,0 +1,19 @@
+{
+  "name": "nats-primary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pub": "ts-node-dev --rs --notify false src/publisher.ts",
+    "sub": "ts-node-dev --rs --notify false src/subscriber.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^16.3.3",
+    "node-nats-streaming": "^0.3.2",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.3.5"
+  }
+}
