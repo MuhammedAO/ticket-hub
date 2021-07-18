@@ -1,7 +1,7 @@
 import nats, { Message, Stan } from "node-nats-streaming"
 import { Subjects } from './subjects';
 
-
+console.clear()
 interface Event {
   subject: Subjects
   data: any
