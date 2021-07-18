@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pub": "ts-node-dev --rs --notify false src/publisher.ts",
-    "sub": "ts-node-dev --rs --notify false src/subscriber.ts"
+    "sub": "ts-node-dev --rs --notify false src/listener.ts"
   },
   "keywords": [],
   "author": "",
