@@ -15,8 +15,8 @@ export abstract class Publisher<T extends Event> {
   }
 
   publish(data: T["data"]) {
-    this.client.publish(this.subject, data, () => {
-      console.log("Event published.")
+    this.client.publish(this.subject, JSON.stringify(data), () => {
+      console.log("Event published bro.")
     })
   }
 }
