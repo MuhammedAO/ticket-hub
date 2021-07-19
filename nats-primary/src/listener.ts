@@ -9,7 +9,7 @@ const stan = nats.connect("ticketing", randomBytes(4).toString("hex"), {
 })
 
 stan.on("connect", () => {
-  console.log("Subscriber connected to NATS")
+  console.log("Listener connected to NATS")
 
   stan.on("close", () => {
     console.log("Connection close")
