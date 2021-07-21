@@ -16,3 +16,5 @@ export * from "./events/subjects"
 export * from "./events/ticket-created-event"
 export * from "./events/ticket-uptated-event"
 
+export * from "./events/types/order-status"
+
