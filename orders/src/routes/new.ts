@@ -5,12 +5,13 @@ import {
   validateRequest,
   NotFoundError,
   OrderStatus,
-  BadRequestError
+  BadRequestError,
 } from "@mhd-ticketx/ticket-x"
 import { body } from "express-validator"
 import { Ticket } from "../models/ticket"
 import { Order } from "../models/order"
-
+import { OrderCreatedPublisher } from "../events/publishers/order-created-publisher"
+import { natsWrapper } from "../nats-wrapper"
 
 const router = express.Router()
 
@@ -38,11 +39,10 @@ router.post(
 
     // Make sure that this ticket is not already reserved
 
+    const isReserved = await ticket.isReserved()
 
-   const isReserved = await ticket.isReserved()
-
-    if(isReserved) {
-      throw new BadRequestError('Ticket already reserved')
+    if (isReserved) {
+      throw new BadRequestError("Ticket already reserved")
     }
 
     // Calculate an expiration date for this order
@@ -55,12 +55,22 @@ router.post(
       userId: req.currentUser!.id,
       status: OrderStatus.Created,
       expiresAt: expiration,
-      ticket
+      ticket,
     })
 
     await order.save()
 
     // Publish an event saying that an order was created
+    new OrderCreatedPublisher(natsWrapper.client).publish({
+      id: order.id,
+      status: order.status,
+      userId: order.userId,
+      expiresAt: order.expiresAt.toISOString(),
+      ticket: {
+        id: ticket.id,
+        price:ticket.price
+      }
+    })
 
     res.status(201).send(order)
   }
