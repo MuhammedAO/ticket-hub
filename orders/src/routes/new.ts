@@ -4,10 +4,13 @@ import {
   requireAuth,
   validateRequest,
   NotFoundError,
+  OrderStatus,
+  BadRequestError
 } from "@mhd-ticketx/ticket-x"
 import { body } from "express-validator"
 import { Ticket } from "../models/ticket"
 import { Order } from "../models/order"
+
 
 const router = express.Router()
 router.post(
@@ -31,6 +34,13 @@ router.post(
     }
 
     // Make sure that this ticket is not already reserved
+
+
+   const isReserved = await ticket.isReserved()
+
+    if(isReserved) {
+      throw new BadRequestError('Ticket already reserved')
+    }
 
     // Calculate an expiration date for this order
 
