@@ -13,8 +13,8 @@ spec:
         app: tickets-mongo
     spec:
       containers:
-      - name: tickets-mongo
-        image: mongo
+        - name: tickets-mongo
+          image: mongo
 
 ---
 apiVersion: v1
@@ -25,8 +25,7 @@ spec:
   selector:
     app: tickets-mongo
   ports:
-  - name: db
-    protocol: TCP
-    port: 27017
-    targetPort: 27017
-
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

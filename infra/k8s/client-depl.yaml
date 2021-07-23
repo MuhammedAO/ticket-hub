@@ -13,8 +13,8 @@ spec:
         app: client
     spec:
       containers:
-      - name: client
-        image: theunrulydev/client
+        - name: client
+          image: theunrulydev/client
 
 ---
 apiVersion: v1
@@ -25,7 +25,7 @@ spec:
   selector:
     app: client
   ports:
-  - name: client
-    protocol: TCP
-    port: 3000
-    targetPort: 3000
+    - name: client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
