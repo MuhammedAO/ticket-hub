@@ -5,10 +5,11 @@ import {
   NotFoundError,
   requireAuth,
   NotAuthorizedError,
+  BadRequestError,
 } from "@mhd-ticketx/ticket-x"
 import { Ticket } from "../models/ticket"
-import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
-import { natsWrapper } from '../nats-wrapper';
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher"
+import { natsWrapper } from "../nats-wrapper"
 
 const router = express.Router()
 
@@ -29,8 +30,12 @@ router.put(
       throw new NotFoundError()
     }
 
+    if (ticket.orderId) {
+      throw new BadRequestError("Cannot edit a reserved ticket")
+    }
+
     if (ticket.userId !== req.currentUser!.id) {
-      throw new NotAuthorizedError('You are not authorized')
+      throw new NotAuthorizedError("You are not authorized")
     }
 
     ticket.set({
@@ -44,7 +49,7 @@ router.put(
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,
-      version: ticket.version
+      version: ticket.version,
     })
 
     res.send(ticket)
