@@ -40,6 +40,7 @@ afterAll(async () => {
   await mongoose.connection.close()
 })
 
+//@ts-ignore
 global.signin = () => {
   //fake authentication
   //build jwt payload
