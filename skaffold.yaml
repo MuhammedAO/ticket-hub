@@ -48,7 +48,7 @@ build:
         manual:
           - dest: .
             src: "**/*.ts"
-    - image: theunrulydev/payments
+    - image: theunrulydev/payment
       context: payments
       docker:
         dockerfile: Dockerfile

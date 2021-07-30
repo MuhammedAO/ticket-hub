@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: payments
-          image: theunrulydev/payments
+          image: theunrulydev/payment
           env:
             - name: NATS_CLIENT_ID
               valueFrom:
