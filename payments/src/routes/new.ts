@@ -8,6 +8,7 @@ import {
   NotAuthorizedError,
   OrderStatus,
 } from "@mhd-ticketx/ticket-x"
+import { stripe } from "../stripe"
 import { Order } from "../models/order"
 
 const router = express.Router()
@@ -26,7 +27,7 @@ router.post(
     if (!order) {
       throw new NotFoundError()
     }
-    //make sure order belongs to user 
+    //make sure order belongs to user
     if (order.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError("Unauthorized to make this request")
     }
@@ -34,6 +35,12 @@ router.post(
     if (order.status === OrderStatus.Cancelled) {
       throw new BadRequestError("Cannot pay for an cancelled order")
     }
+
+    await stripe.charges.create({
+      currency: 'usd',
+      amount: order.price * 100,
+      source: token
+    })
 
     res.send({ success: true })
   }
