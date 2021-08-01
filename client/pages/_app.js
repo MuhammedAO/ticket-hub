@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps, currentUser }) {
     <React.Fragment>
       <Header currentUser={currentUser} />
       <main className="py-3">
-        <Component {...pageProps} />
+        <Component currentUser={currentUser} {...pageProps} />
       </main>
     </React.Fragment>
   )
@@ -20,7 +20,7 @@ MyApp.getInitialProps = async (appContext) => {
 
   let pageProps = {}
   if (appContext.Component.getInitialProps) {
-    pageProps = await appContext.Component.getInitialProps(appContext.ctx)
+    pageProps = await appContext.Component.getInitialProps(appContext.ctx, client)
   }
 
   return {

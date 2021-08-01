@@ -1,27 +1,42 @@
 import React from "react"
-import axios from "axios"
 
-function Home({ currentUser }) {
+function Home({ currentUser, tickets }) {
+  const ticketList = tickets.map((ticket) => {
+    return (
+      <tr key={ticket.id}>
+        <td>{ticket.title}</td>
+        <td>{ticket.price}</td>
+      </tr>
+    )
+  })
+
   return (
     <div className="container">
-    { currentUser ?  <h5>Welcome {currentUser.email} You are now signed in</h5> : <h3>Welcome Guest. Please Sign in to continue</h3>}
+      {currentUser ? (
+        <h5>Welcome {currentUser.email} You are now signed in</h5>
+      ) : (
+        <h3>Welcome Guest. Please Sign in to continue</h3>
+      )}
+      <br />
+      <br />
+      <h1>Your Tickets</h1>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>{ticketList}</tbody>
+      </table>
     </div>
   )
 }
 
-export const getServerSideProps = async ({ req }) => {
-  const { data } = await axios.get(
-    "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser",
-    {
-      headers: req.headers
-    }
-  )
-  return {
-    props: {
-      currentUser: data.currentUser,
-    },
-  }
-}
+Home.getInitialProps = async (client) => {
+  const { data } = await client.get("/api/tickets")
 
+  return { tickets: data }
+}
 
 export default Home
