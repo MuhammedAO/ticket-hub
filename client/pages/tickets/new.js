@@ -33,7 +33,8 @@ function NewTicket() {
       setLoading(true)
       setTitle("")
       setPrice("")
-
+      
+      Router.push('/')
       console.log(response.data)
     } catch (err) {
       setErrors(err.response.data.errors)

@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "next/link"
 
 function Home({ currentUser, tickets }) {
   const ticketList = tickets.map((ticket) => {
@@ -6,6 +7,11 @@ function Home({ currentUser, tickets }) {
       <tr key={ticket.id}>
         <td>{ticket.title}</td>
         <td>{ticket.price}</td>
+        <td>
+          <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+            <a>View</a>
+          </Link>
+        </td>
       </tr>
     )
   })
@@ -25,6 +31,7 @@ function Home({ currentUser, tickets }) {
           <tr>
             <th>Title</th>
             <th>Price</th>
+            <th>Link</th>
           </tr>
         </thead>
         <tbody>{ticketList}</tbody>
@@ -33,7 +40,7 @@ function Home({ currentUser, tickets }) {
   )
 }
 
-Home.getInitialProps = async (client) => {
+Home.getInitialProps = async (context, client) => {
   const { data } = await client.get("/api/tickets")
 
   return { tickets: data }
