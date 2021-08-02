@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import axios from "axios"
 import { Button } from "react-bootstrap"
 import Message from "../../components/Message"
+import Loader from "../../components/Loader"
+import Router from "next/router"
 
 const TicketShow = ({ ticket }) => {
   const [loading, setLoading] = useState(false)
@@ -14,6 +16,7 @@ const TicketShow = ({ ticket }) => {
       })
       console.log(response.data)
       setLoading(true)
+      Router.push("/orders/[orderId]", `/orders/${response.data.id}`)
     } catch (err) {
       setErrors(err.response.data.errors)
     }

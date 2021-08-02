@@ -9,7 +9,7 @@ import { Order } from "../models/order"
 const router = express.Router()
 
 router.get(
-  "/api/orders/orderId",
+  "/api/orders/:orderId",
   requireAuth,
   async (req: Request, res: Response) => {
     const order = await Order.findById(req.params.orderId).populate("ticket")
@@ -17,6 +17,7 @@ router.get(
     if (!order) {
       throw new NotFoundError()
     }
+    // console.log("order not found")
 
     if (order.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError("Not Authorized")
