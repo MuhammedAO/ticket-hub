@@ -1,41 +1,28 @@
 import React, { useState } from "react"
-import axios from "axios"
 import { Button } from "react-bootstrap"
-import Message from "../../components/Message"
-import Loader from "../../components/Loader"
 import Router from "next/router"
+import useRequest from '../../hooks/use-request';
 
 const TicketShow = ({ ticket }) => {
-  const [loading, setLoading] = useState(false)
-  const [errors, setErrors] = useState([])
+ 
 
-  const Perform = async () => {
-    try {
-      const response = await axios.post("/api/orders", {
-        ticketId: ticket.id,
-      })
-      console.log(response.data)
-      setLoading(true)
-      Router.push("/orders/[orderId]", `/orders/${response.data.id}`)
-    } catch (err) {
-      setErrors(err.response.data.errors)
-    }
+  const { doRequest, errors } = useRequest({
+    url: '/api/orders',
+    method: 'post',
+    body: {
+      ticketId: ticket.id,
+    },
+    onSuccess: (order) =>
+      Router.push('/orders/[orderId]', `/orders/${order.id}`),
+  });
 
-    setLoading(false)
-  }
 
   return (
     <div className="container">
       <h1>{ticket.title}</h1>
       <h4>Price: {ticket.price}</h4>
-      {errors.length > 0 &&
-        errors.map((err) => (
-          <Message key={err.message} variant="danger">
-            {err.message}
-          </Message>
-        ))}
-      {loading && <Loader />}
-      <Button onClick={Perform} type="submit" variant="primary">
+      {errors}
+      <Button onClick={() => doRequest()} type="submit" variant="primary">
         Purchase
       </Button>
     </div>
