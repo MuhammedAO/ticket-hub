@@ -2,23 +2,24 @@ import { MongoMemoryServer } from "mongodb-memory-server"
 import mongoose from "mongoose"
 import jwt from "jsonwebtoken"
 
-
 declare global {
   namespace NodeJS {
     interface Global {
-      signin(): string[]
+      signin(id?: string): string[]
     }
   }
 }
 
-jest.mock('../nats-wrapper.ts')
+jest.mock("../nats-wrapper.ts")
 
-process.env.STRIPE_KEY = "sk_test_51H7gMBKtrUh0VzhGjesOPVt00N6gKoUX3zFHYAmhYCh3fzucO4yao8eznVb2M"
+process.env.STRIPE_KEY =
+  "sk_test_51H7gMBKtrUh0VzhGjesOPVt00N6gKoUX3zFHYAmhYCh3fzucO4yao8eznVb2M16QFcRJ1eZXqnuCKrMVGRvvPE4300vOAkr1oa"
 
 let mongo: any
 
 beforeAll(async () => {
   process.env.JWT_KEY = "jhknj"
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   mongo = await MongoMemoryServer.create()
   const mongoUri = mongo.getUri()
 
@@ -42,27 +43,25 @@ afterAll(async () => {
   await mongoose.connection.close()
 })
 
-//@ts-ignore
-global.signin = () => {
-  //fake authentication
-  //build jwt payload
+global.signin = (id?: string) => {
+  // Build a JWT payload.  { id, email }
   const payload = {
-    id: new mongoose.Types.ObjectId().toHexString(),
-    email: "llkmfk@kmdkl.com",
+    id: id || new mongoose.Types.ObjectId().toHexString(),
+    email: "test@test.com",
   }
 
-  //create jwt
+  // Create the JWT!
   const token = jwt.sign(payload, process.env.JWT_KEY!)
 
-  //build session{}
-  const session = {
-    jwt: token,
-  }
-  //convert to json
-  const sessJSON = JSON.stringify(session)
+  // Build session Object. { jwt: MY_JWT }
+  const session = { jwt: token }
 
-  //encode
-  const base64 = Buffer.from(sessJSON).toString("base64")
+  // Turn that session into JSON
+  const sessionJSON = JSON.stringify(session)
 
-  return [`express:sess${base64}`]
+  // Take JSON and encode it as base64
+  const base64 = Buffer.from(sessionJSON).toString("base64")
+
+  // return a string thats the cookie with the encoded data
+  return [`express:sess=${base64}`]
 }
