@@ -3,17 +3,17 @@ import mongoose from "mongoose"
 import jwt from "jsonwebtoken"
 
 
+
+
 declare global {
-  namespace NODEJS {
-    interface GLOBAL {
+  namespace NodeJS {
+    interface Global {
       signin(): string[]
     }
   }
 }
 
-
-
-// jest.mock('../nats-wrapper.ts')
+jest.mock('../nats-wrapper.ts')
 
 let mongo: any
 
@@ -50,7 +50,7 @@ global.signin = () => {
   //build jwt payload
   const payload = {
     id: new mongoose.Types.ObjectId().toHexString(),
-    email: "llkmfk@kmdkl.com",
+    email: "random@test.com",
   }
 
   //create jwt
@@ -66,5 +66,5 @@ global.signin = () => {
   //encode
   const base64 = Buffer.from(sessJSON).toString("base64")
 
-  return [`express:sess${base64}`]
+  return [`express:sess=${base64}`]
 }
