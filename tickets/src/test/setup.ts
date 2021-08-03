@@ -61,5 +61,5 @@ global.signin = () => {
   //encode
   const base64 = Buffer.from(sessJSON).toString("base64")
 
-  return [`express:sess${base64}`]
+  return [`express:sess=${base64}`]
 }
