@@ -19,11 +19,7 @@ let mongo: any
 
 beforeAll(async () => {
   process.env.JWT_KEY = "jhknj"
-<<<<<<< HEAD
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
-=======
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
->>>>>>> 14dc775dc1bf0158b952d8671d6c53a79738545a
   mongo = await MongoMemoryServer.create()
   const mongoUri = mongo.getUri()
 
