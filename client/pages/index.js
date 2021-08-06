@@ -25,7 +25,7 @@ function Home({ currentUser, tickets }) {
       )}
       <br />
       <br />
-      <h1>Your Tickets</h1>
+      <h3>Your Tickets</h3>
       <table className="table">
         <thead>
           <tr>
