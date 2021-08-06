@@ -68,3 +68,4 @@ global.signin = () => {
 
   return [`express:sess=${base64}`]
 }
+

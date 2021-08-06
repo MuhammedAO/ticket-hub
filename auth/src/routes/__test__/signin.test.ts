@@ -23,8 +23,8 @@ it("fails when an incorrect password is provided", async () => {
   await request(app)
     .post("/api/users/signin")
     .send({
-      email: "random@test.com",
-      password: "rando",
+      email: "random@test.co",
+      password: "jknjknjknjk",
     })
     .expect(400)
 })
