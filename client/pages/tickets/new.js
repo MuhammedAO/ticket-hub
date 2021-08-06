@@ -16,7 +16,7 @@ function NewTicket() {
     const value = parseFloat(price)
 
     if (isNaN(value)) {
-      return
+      return;
     }
 
     setPrice(value.toFixed(2))
