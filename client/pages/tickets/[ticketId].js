@@ -17,7 +17,7 @@ const TicketShow = ({ ticket }) => {
   return (
     <div className="container">
       <h1>{ticket.title}</h1>
-      <h4>Price: {ticket.price}</h4>
+      <h4>Price:$ {ticket.price} </h4>
       {errors}
       <Button onClick={() => doRequest()} type="submit" variant="primary">
         Purchase
