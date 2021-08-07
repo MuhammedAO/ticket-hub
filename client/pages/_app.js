@@ -2,6 +2,7 @@ import React from "react"
 import "../bootstrap.min.css"
 import Header from "../components/Header"
 import buildClient from "../components/build-client"
+import Footer from "../components/Footer"
 
 function MyApp({ Component, pageProps, currentUser }) {
   return (
@@ -10,6 +11,7 @@ function MyApp({ Component, pageProps, currentUser }) {
       <main className="py-3">
         <Component currentUser={currentUser} {...pageProps} />
       </main>
+      <Footer/>
     </React.Fragment>
   )
 }
